@@ -42,9 +42,10 @@ trials = st.number_input("試行回数", min_value=1, max_value=10000, value=100
 
 if st.button("シミュレーション開始"):
     results = simulate_amidakuji(vertical_lines, horizontal_lines, goal_index, trials)
+    probabilities = [count / trials * 100 for count in results]
     fig, ax = plt.subplots()
-    ax.bar(range(vertical_lines), results, tick_label=[f"{i+1}" for i in range(vertical_lines)])
-    ax.set_xlabel("vertical line")
-    ax.set_ylabel("probabilty")
-    ax.set_title(f"win position：{goal_index+1}（trial：{trials}）")
+    ax.bar(range(vertical_lines), probabilities, tick_label=[f"{i+1}" for i in range(vertical_lines)])
+    ax.set_xlabel("縦線の番号")
+    ax.set_ylabel("当たる確率（%）")
+    ax.set_title(f"当たりの位置：{goal_index+1}番目（試行回数：{trials}）")
     st.pyplot(fig)
